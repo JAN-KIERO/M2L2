@@ -1,5 +1,6 @@
 import discord
 import random
+from wherebin import eko
 from discord.ext import commands
 
 intents = discord.Intents.default()
@@ -65,25 +66,40 @@ porady = [
     C31, C32, C33, C34, C35, C36, C37, C38, C39, C40,
     C41, C42, C43, C44, C45, C46, C47, C48, C49, C50 ]
 
+
 @bot.event
 async def on_ready():
     print(f'Zalogowaliśmy się jako {bot.user}')
 
-@bot.command()
-async def hello(ctx):
-    """Przywitanie Bota"""
-    await ctx.send('Jestem **Ekobot** pomogę ci zmniejszyć ilośc wytwarzanych odpadów!')
-
+    channel_id = 1421409966090354728
+    channel = bot.get_channel(channel_id)
+    
 @bot.command()
 async def eko_start(ctx):
     """Eko porady"""
-    eko = random.choice(porady)
-    await ctx.send(eko)
+    porada = random.choice(porady)
+    await ctx.send(porada)
+
+@bot.command()
+async def eko_bin(ctx, *, wordls = ""):
+    """Pomoc w segregacji odpadów"""
+    await ctx.send(eko(wordls))
 
 @bot.command()
 async def pomoc(ctx):
     """Pomoc w komendach"""
     for command in bot.commands:
         await ctx.send(f' ${command.name}: {command.help}')
-        
+
+@bot.command()
+async def help_bin(ctx):
+    await ctx.send("- **♻️ Jeśli wpiszesz `eko_bin <JAKIŚ ODPAD>`, CHATBOT wskaże Ci odpowiedni pojemnik 🗑️. Możesz pytać o takie odpady jak:**")
+    await ctx.send("- 📰 GAZETA, CZASOPISMO, ULOTKA REKLAMOWA, KSIĄŻKA 📖, ZESZYT, KARTKA PAPIERU 📄, TORBA PAPIEROWA 🛍️, PUDEŁKO KARTONOWE 📦, TEKTURA FALISTA, ROLKA PO PAPIERZE TOALETOWYM, ROLKA PO RĘCZNIKU PAPIEROWYM, KOPERTA ✉️, PAPIER DO PAKOWANIA PREZENTÓW 🎁, BILET AUTOBUSOWY 🎟️, WYDRUK KOMPUTEROWY, PUDEŁKO PO BUTACH 👟, KARTONOWY WYKŁADZINA NA JAJKA 🥚")
+    await ctx.send("- 🍾 BUTELKA PO PIWIE, BUTELKA PO WINIE 🍷, SŁOIK PO DŻEMIE, SŁOIK PO KONCENTRACIE POMIDOROWYM 🍅, BUTELKA PO SOKU, SŁOIK PO OGÓRKACH, OPAKOWANIE PO PERFUMACH, BUTELKA PO OLIWIE, PUSTY SŁOIK PO KAWIE ROZPUSZCZALNEJ ☕, BUTELKA PO WODZIE MINERALNEJ")
+    await ctx.send("- 🥤 PLASTIKOWA BUTELKA PO WODZIE, PLASTIKOWA BUTELKA PO NAPOJU, KARTON PO MLEKU 🥛, KARTON PO SOKU, PUSZKA PO NAPOJU, PUSZKA PO KONSERWIE 🥫, FOLIA ALUMINIOWA, PLASTIKOWY KUBECZEK PO JOGURCIE, OPAKOWANIE PO SERKU WIEJSKIM, PLASTIKOWA NAKRĘTKA OD BUTELKI, METALOWA ZAKRĘTKA OD SŁOIKA, OPAKOWANIE PO CHIPSACH 🥔")
+    await ctx.send("- 🛍️ PLASTIKOWA TORBA NA ZAKUPY, FOLIA BĄBELKOWA, OPAKOWANIE PO CHEMII GOSPODARCZEJ 🧼, BUTELKA PO SZAMPONIE, OPAKOWANIE PO MYDLE W PŁYNIE, DONICZKA PLASTIKOWA, PLASTIKOWE OPAKOWANIE PO OWOCACH 🍓, STYROPIAN OPAKOWANIOWY, OPAKOWANIE PO MAŚLE/MARGARYNIE 🧈, KAPSEL OD PIWA, PUSTA TUBKA PO PAŚCIE DO ZĘBÓW, WIADRO PLASTIKOWE 🪣, ZABAWKA 🧸")
+    await ctx.send("- 🌱 OBIERKI Z ZIEMNIAKÓW, RESZTKI WARZYW 🥕, OGRYZEK JABŁKA 🍎, SKÓRKA OD BANANA 🍌, FUSY PO KAWIE, TOREBKA PO HERBACIE EKSPRESOWEJ 🍵, RESZTKI HERBATY LIŚCIASTEJ, SKORUPKI JAJEK, ZWIĘDŁE KWIATY 🥀, SKOSZONA TRAWA, LIŚCIE 🍃, DROBNE GAŁĘZIE 🪵, RESZTKI OWOCÓW, PESTKI Z ARBUZA 🍉, TROCINY, NIEZJEDZONY CHLEB 🍞")
+    await ctx.send("- 🍖 RESZTKI MIĘSA, KOŚCI, ZUŻYTY RĘCZNIK PAPIEROWY, PARAGON FISKALNY, ZUŻYTA CHUSTECZKA HIGIENICZNA, WACIK KOSMETYCZNY, PATYCZEK DO USZU, ZUŻYTA PIELUCHA JEDNORAZOWA, PODPASKA/TAMPON, ROZBITY TALERZ CERAMICZNY 🍽️, POTŁUCZONA SZKLANKA, STARE LUSTRO, ŻWIREK DLA KOTA 🐈, ODCHODY ZWIERZĘCE 🐾")
+    await ctx.send("- 🚬 WOREK Z ODKURZACZA, NIEDOPAŁEK PAPIEROSA, ZUŻYTA ŻARÓWKA 💡, SKÓRZANY PASEK, GĄBKA DO MYCIA NACZYŃ, ZUŻYTA SZCZOTECZKA DO ZĘBÓW, ZUŻYTY OLEJ PO SMAŻENIU, POPIÓŁ Z KOMINKA 🔥, OPAKOWANIE PO LEKACH 💊, ZDJĘCIA FOTOGRAFICZNE 📷, UBRANIA NIENADAJĄCE SIĘ DO NOSZENIA 👕")
+
 bot.run("")
